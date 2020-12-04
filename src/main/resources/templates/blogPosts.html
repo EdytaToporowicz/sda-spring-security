@@ -31,15 +31,14 @@
 
     <div class="container">
         <div class="row justify-content-center mt-5">
-                <button type="button" class="btn btn-outline-primary mr-1">Temat 1</button>
-                <button type="button" class="btn btn-outline-primary mr-1">Temat 2</button>
-                <button type="button" class="btn btn-outline-primary mr-1">Temat 3</button>
+            <a th:each="topic : ${topics}" class="btn btn-outline-primary mr-1" th:text="${topic}"
+                th:href="@{/blogPosts(topic=${topic})}">Temat 1</a>
         </div>
         <div class="row justify-content-center">
-            <div class="blog-post col-8 mt-5">
-                <h2 class=" blog-post-title">Przykładowy post na bloga</h2>
-                <p class="blog-post-meta">December 23, 2013 by Jacob</p>
-                <p class="text-justify">Najpiękniejszéj Siadł Najpiękniejszego Kazał szafie jezior Rzeczypospolitéj.
+            <div th:each="blogPost : ${blogPosts}" class="blog-post col-8 mt-5">
+                <h2 class="blog-post-title" th:text="${blogPost.title}">Przykładowy post na bloga</h2>
+                <p class="blog-post-meta" th:text="'Stworzony ' + ${#temporals.format(blogPost.created, 'dd-MM-yyyy HH:mm')} + ' przez ' + ${blogPost.author.name}">December 23, 2013 by Jacob</p>
+                <p class="text-justify" th:text="${blogPost.content}">Najpiękniejszéj Siadł Najpiękniejszego Kazał szafie jezior Rzeczypospolitéj.
                     Lasy Bogu razu Białopiotrowiczem owad. Jedni kąty Białopiotrowiczowi Ślad wybor osoby domie Spór.
                     Wiatrów wnuki Żyje Podobną Kulturze lekko kusym Kochajmy Cały żyjąca Stali.
                     Bryką orzeł miłą rozsądzi pełne Widać piasku rydzem otworu kołyszą wcześnie.

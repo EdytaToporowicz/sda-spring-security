@@ -5,6 +5,8 @@ import pl.sda.blogservicedata.model.Topic;
 import pl.sda.blogservicedata.model.request.TopicDto;
 import pl.sda.blogservicedata.repository.TopicRepository;
 
+import java.util.List;
+
 @Service
 public class TopicService {
 
@@ -17,5 +19,9 @@ public class TopicService {
     public Topic createTopic(TopicDto topicDto) {
         Topic topic = new Topic(null, topicDto.getName(), null);
         return topicRepository.save(topic);
+    }
+
+    public List<Topic> findAll() {
+        return topicRepository.findAll();
     }
 }
