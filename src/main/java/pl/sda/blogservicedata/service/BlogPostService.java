@@ -14,6 +14,7 @@ import pl.sda.blogservicedata.model.Topic;
 import pl.sda.blogservicedata.model.User;
 import pl.sda.blogservicedata.model.mapping.BlogPostMapper;
 import pl.sda.blogservicedata.model.request.BlogPostDto;
+import pl.sda.blogservicedata.model.request.BlogPostForm;
 import pl.sda.blogservicedata.repository.BlogPostRepository;
 import pl.sda.blogservicedata.repository.FilteringBlogPostRepository;
 import pl.sda.blogservicedata.repository.TopicRepository;
@@ -51,6 +52,12 @@ public class BlogPostService {
 
     public BlogPost save(final BlogPostDto blogPostDto) {
         BlogPost blogPost = blogPostMapper.map(blogPostDto);
+        blogPost.setCreated(LocalDateTime.now());
+        return blogPostRepository.save(blogPost);
+    }
+
+    public BlogPost saveFromFormData(final BlogPostForm blogPostForm) {
+        BlogPost blogPost = blogPostMapper.mapFormData(blogPostForm);
         blogPost.setCreated(LocalDateTime.now());
         return blogPostRepository.save(blogPost);
     }

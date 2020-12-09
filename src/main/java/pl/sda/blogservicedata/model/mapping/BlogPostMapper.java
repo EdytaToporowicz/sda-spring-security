@@ -6,6 +6,7 @@ import pl.sda.blogservicedata.exception.UserNotFoundException;
 import pl.sda.blogservicedata.model.BlogPost;
 import pl.sda.blogservicedata.model.Topic;
 import pl.sda.blogservicedata.model.request.BlogPostDto;
+import pl.sda.blogservicedata.model.request.BlogPostForm;
 import pl.sda.blogservicedata.repository.TopicRepository;
 import pl.sda.blogservicedata.repository.UserRepository;
 
@@ -34,6 +35,18 @@ public class BlogPostMapper {
                         .orElseThrow(() -> new TopicNotFoundException("Topic not found in catalogue: " + topic)))
                 .collect(Collectors.toList());
         blogPost.setTopics(topicsList);
+        return blogPost;
+    }
+
+    public BlogPost mapFormData(BlogPostForm blogPostForm) {
+        final BlogPost blogPost = new BlogPost();
+        blogPost.setAuthor(userRepository.findByEmail(blogPostForm.getAuthorEmail())
+                .orElseThrow(() -> new UserNotFoundException("Author not found: " + blogPostForm.getAuthorEmail())));
+        blogPost.setTitle(blogPostForm.getTitle());
+        blogPost.setContent(blogPostForm.getContent());
+        List<Topic> selectedTopics = blogPostForm.getSelectedTopics().stream().map(topic -> topicRepository.findByName(topic).orElseThrow(() ->
+                new TopicNotFoundException("Topic not found: " + topic))).collect(Collectors.toList());
+        blogPost.setTopics(selectedTopics);
         return blogPost;
     }
 }

@@ -37,4 +37,18 @@ public class BlogPost {
         this.topics = topics;
         this.created = created;
     }
+
+    @Override
+    public String toString() {
+        return "BlogPost{" +
+                "id=" + id +
+                ", author=" + author +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", topics=" + topics.size() +
+                ", comments=" + comments +
+                ", created=" + created +
+                ", modified=" + modified +
+                '}';
+    }
 }

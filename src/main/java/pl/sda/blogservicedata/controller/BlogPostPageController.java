@@ -11,7 +11,6 @@ import pl.sda.blogservicedata.service.BlogPostService;
 import pl.sda.blogservicedata.service.TopicService;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -29,7 +28,7 @@ public class BlogPostPageController {
     public String blogPostsPage(ModelMap modelMap, @RequestParam(required = false) String topic) {
         List<BlogPost> blogPosts = topic == null ? blogPostService.findAll() :
                 blogPostService.findByFilter(topic, null, null, null);
- //       List<BlogPost> blogPosts = blogPostService.findAll();
+        //       List<BlogPost> blogPosts = blogPostService.findAll();
         List<String> topics = topicService.findAll().stream().map(Topic::getName).collect(Collectors.toList());
         modelMap.addAttribute("blogPosts", blogPosts);
         modelMap.addAttribute("topics", topics);

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,6 +23,14 @@ public class Topic {
     private String name;
     @JsonIgnore
     @ManyToMany(mappedBy = "topics")
-    private List<BlogPost> blogPosts;
+    private List<BlogPost> blogPosts = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return "Topic{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", blogPosts=" + blogPosts.size() +
+                '}';
+    }
 }
