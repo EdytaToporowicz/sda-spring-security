@@ -3,10 +3,12 @@ package pl.sda.blogservicedata.service;
 import org.springframework.stereotype.Service;
 import pl.sda.blogservicedata.exception.BlogPostNotFoundException;
 import pl.sda.blogservicedata.exception.CommentNotFondException;
+import pl.sda.blogservicedata.exception.UserNotFoundException;
 import pl.sda.blogservicedata.model.BlogPost;
 import pl.sda.blogservicedata.model.Comment;
 import pl.sda.blogservicedata.model.User;
 import pl.sda.blogservicedata.model.request.CommentDto;
+import pl.sda.blogservicedata.model.request.CommentForm;
 import pl.sda.blogservicedata.repository.BlogPostRepository;
 import pl.sda.blogservicedata.repository.CommentRepository;
 import pl.sda.blogservicedata.repository.UserRepository;
@@ -37,5 +39,18 @@ public class CommentService {
         comment.setCreated(LocalDateTime.now());
         comment.setBlogPost(blogPost);
         return commentRepository.save(comment);
+    }
+
+    public void addCommentToBlogPost(CommentForm commentForm) {
+        Comment comment = new Comment();
+        User author = userRepository.findByEmail(commentForm.getAuthorEmail()).orElseThrow(() ->
+                new UserNotFoundException("User not found: " + commentForm.getAuthorEmail()));
+        comment.setAuthor(author);
+        comment.setCreated(LocalDateTime.now());
+        comment.setContent(commentForm.getContent());
+        BlogPost blogPost = blogPostRepository.findById(commentForm.getBlogPostId()).orElseThrow(()
+                -> new BlogPostNotFoundException("Blog post was not found: " + commentForm.getBlogPostId()));
+        comment.setBlogPost(blogPost);
+        commentRepository.save(comment);
     }
 }

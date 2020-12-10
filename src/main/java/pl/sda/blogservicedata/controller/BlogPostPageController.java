@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import pl.sda.blogservicedata.model.BlogPost;
 import pl.sda.blogservicedata.model.Topic;
+import pl.sda.blogservicedata.model.request.CommentForm;
 import pl.sda.blogservicedata.service.BlogPostService;
 import pl.sda.blogservicedata.service.TopicService;
 
@@ -28,7 +29,6 @@ public class BlogPostPageController {
     public String blogPostsPage(ModelMap modelMap, @RequestParam(required = false) String topic) {
         List<BlogPost> blogPosts = topic == null ? blogPostService.findAll() :
                 blogPostService.findByFilter(topic, null, null, null);
-        //       List<BlogPost> blogPosts = blogPostService.findAll();
         List<String> topics = topicService.findAll().stream().map(Topic::getName).collect(Collectors.toList());
         modelMap.addAttribute("blogPosts", blogPosts);
         modelMap.addAttribute("topics", topics);
@@ -39,6 +39,9 @@ public class BlogPostPageController {
     public String blogPostDetailsPage(ModelMap modelMap, @PathVariable("id") long id) {
         BlogPost blogPost = blogPostService.findById(id);
         modelMap.addAttribute("blogPost", blogPost);
+        CommentForm commentForm = new CommentForm();
+        commentForm.setBlogPostId(id);
+        modelMap.addAttribute("commentForm", commentForm);
         return "blogPostDetails";
     }
 }

@@ -47,18 +47,39 @@
                     Muszę kawiarniach piękności zdała niéma grosza dowództwie wiosce dotąd dochodziło Wilnie.</p>
             </div>
         </div>
-        <div class="row blog-post justify-content-center">
-          <h3 class="col-8 mb-3">Komentarze:</h3>    
+        <div class="row justify-content-center">
+          <h3 class="col-8 mb-3 mt-3">Komentarze:</h3>   
+        </div> 
+        <div class="row justify-content-center">
+           <hr class=" col-8">
         </div>
-        <hr class="row col-8">
         <div class="row blog-posts justify-content-center" th:each="comment : ${blogPost.comments}">
-            <div class="col-8 border border-ligh mt-3 pt-3">
+            <div class="col-8 border border-light mt-3 pt-3">
               <p class="col-8" th:text="${comment.content}"></p>
               <p class="blog-post-meta col-8 font-italic" th:text="${comment.author.name} + ' - ' + ${#temporals.format(comment.created, 'dd-MM-yyyy HH:mm')}"></p>
             </div>
         </div>
-
-
+        <div class="row justify-content-center">
+            <hr class=" col-8">
+        </div>
+        <form method="POST" th:object="${commentForm}" th:action="@{/blogPosts/__${commentForm.blogPostId}__/comment}">
+                <div class="form-group row justify-content-center">
+                    <input class="form-control col-8" type="text" id="authorEmail" th:field="*{authorEmail}" placeholder="Autor - podaj email"></input>
+                    <ul class="col-8" th:if="${#fields.hasErrors('authorEmail')}">
+                        <li class="alert alert-danger" th:each="error : ${#fields.errors('authorEmail')}" th:text="${error}"></li>
+                    </ul>
+                </div>
+                <div class="form-group row justify-content-center">
+                    <textarea class="form-control col-8" type="text" id="content" th:field="*{content}" placeholder="Komentarz" rows="3"></textarea>
+                    <ul class="col-8" th:if="${#fields.hasErrors('content')}">
+                        <li class="alert alert-danger" th:each="error : ${#fields.errors('content')}" th:text="${error}"></li>
+                    </ul>
+                </div>
+                <div class="form-group row justify-content-center">
+                    <button type="submit" class="btn btn-primary">Dodaj komentarz</button>
+                </div>
+        </form> 
+    </div>    
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
