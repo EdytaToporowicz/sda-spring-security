@@ -33,11 +33,6 @@ public class BlogPostFormController {
         BlogPostForm blogPostForm = new BlogPostForm();
         blogPostForm.setSelectedTopics(new ArrayList<>());
         List<Topic> topics = topicService.findAll();
-//        for(Topic topic : topics) {
-//            Topic emptyTopic = new Topic();
-//            emptyTopic.setId(-1L);
-//            blogPostForm.getSelectedTopics().add(emptyTopic);
-//        }
         modelMap.addAttribute("topics", topics);
         modelMap.addAttribute("blogPostForm", blogPostForm);
         return "blogPostForm";
