@@ -26,5 +26,7 @@ public class User {
     @JsonIgnore
     @OneToMany(mappedBy = "author")
     private List<Comment> comments;
+    private String role;
+    private String password;
 
 }

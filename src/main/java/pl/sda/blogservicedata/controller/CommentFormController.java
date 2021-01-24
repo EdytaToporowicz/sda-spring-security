@@ -1,5 +1,6 @@
 package pl.sda.blogservicedata.controller;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.Errors;
@@ -24,6 +25,7 @@ public class CommentFormController {
         this.blogPostService = blogPostService;
     }
 
+    @Secured({"ROLE_READER", "ROLE_AUTHOR"})
     @PostMapping("/blogPosts/{blogPostId}/comment")
     public String addCommentToBlogPost(
             @PathVariable long blogPostId,

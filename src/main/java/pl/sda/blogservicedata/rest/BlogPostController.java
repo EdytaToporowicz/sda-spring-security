@@ -3,6 +3,7 @@ package pl.sda.blogservicedata.rest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import pl.sda.blogservicedata.model.BlogPost;
 import pl.sda.blogservicedata.model.request.BlogPostDto;
@@ -34,6 +35,7 @@ public class BlogPostController {
         return ResponseEntity.ok(blogPostService.findByFilter(topic, authorId, titlePhrase, pageable));
     }
 
+    @Secured({"ROLE_AUTHOR", "ROLE_READER"})
     @GetMapping(path = "/blogPosts/{blogPostId}", produces = {MediaType.APPLICATION_JSON_VALUE,
             MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<BlogPost> findById(final @PathVariable long blogPostId) {
@@ -46,6 +48,7 @@ public class BlogPostController {
         return ResponseEntity.noContent().build();
     }
 
+    @Secured("ROLE_AUTHOR")
     @PostMapping(path = "/blogPosts", consumes = {MediaType.APPLICATION_JSON_VALUE,
             MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<BlogPost> create(final @RequestBody @Valid BlogPostDto blogPostDto) {

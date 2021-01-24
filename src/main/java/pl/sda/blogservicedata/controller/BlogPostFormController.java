@@ -1,5 +1,6 @@
 package pl.sda.blogservicedata.controller;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.Errors;
@@ -26,6 +27,7 @@ public class BlogPostFormController {
         this.topicService = topicService;
     }
 
+
     @GetMapping("/blogPostForm")
     public String getBlogPostForm(ModelMap modelMap) {
         BlogPostForm blogPostForm = new BlogPostForm();
@@ -36,6 +38,7 @@ public class BlogPostFormController {
         return "blogPostForm";
     }
 
+    @Secured("ROLE_AUTHOR")
     @PostMapping("/blogPostForm")
     public String saveBlogPostFromForm(@ModelAttribute("blogPostForm") @Valid BlogPostForm blogPostForm, Errors errors) {
         if (errors.hasErrors()) {

@@ -1,5 +1,6 @@
 package pl.sda.blogservicedata.controller;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +36,7 @@ public class BlogPostPageController {
         return "blogPosts";
     }
 
+    @Secured({"ROLE_READER", "ROLE_AUTHOR"})
     @GetMapping("/blogPosts/{id}")
     public String blogPostDetailsPage(ModelMap modelMap, @PathVariable("id") long id) {
         BlogPost blogPost = blogPostService.findById(id);
