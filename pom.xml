@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>pl.sda</groupId>
-	<artifactId>blog-service-thymeleaf</artifactId>
+	<artifactId>live-coding-spring-security</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>blog-service-thymeleaf</name>
 	<description>Demo project for Spring Data</description>
