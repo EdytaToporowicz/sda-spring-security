@@ -22,8 +22,10 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/blogPosts", "/api/*/comments").authenticated()
-                .antMatchers("/blogPosts/*", "/blogPostsForm").authenticated()
+                .antMatchers(HttpMethod.POST, "/api/blogPosts", "/api/*/comments")
+                .authenticated()
+                .antMatchers("/blogPosts/*", "/blogPostsForm")
+                .authenticated()
                 .anyRequest().permitAll()
                 .and()
                 .httpBasic()
